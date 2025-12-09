@@ -1,6 +1,6 @@
 import app from "./app.js";
 
-app.listen(3001, "0.0.0.0", () => {
-  console.log("Servidor rodando na porta 3001");
-  console.log("Acesse em: http://localhost:3001");
+app.listen(3000, "0.0.0.0", () => {
+  console.log("Servidor rodando na porta 3000");
+  console.log("Acesse em: http://localhost:3000");
 });
