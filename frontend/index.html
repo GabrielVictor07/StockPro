@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- DaisyUI -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!-- Flowbite -->
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="assets/style.css" />
+    <title>Sistema de Estoque</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+      
+      * {
+        font-family: 'Inter', sans-serif;
+      }
+      
+      .active-menu {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      }
+      
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+      
+      .gradient-bg {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      
+      .gradient-border {
+        position: relative;
+        background: #1a1a1a;
+        border-radius: 0.75rem;
+      }
+      
+      .gradient-border::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 0.75rem;
+        padding: 2px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+      }
+
+      .gradient-border::before,
+.gradient-border::after {
+  pointer-events: none;
+}
+
+    </style>
+  </head>
+
+  <body class="bg-gradient-to-br from-[#0a0a0a] via-[#0d0d0d] to-[#1a1a1a] text-gray-100 flex h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="w-72 bg-gradient-to-b from-[#0f0f0f] to-[#1a1a1a] shadow-2xl flex flex-col fixed h-full border-r border-white/5 backdrop-blur-xl">
+      <!-- Logo/Header -->
+      <div class="p-6 border-b border-white/5">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center">
+            <i class="fas fa-boxes text-white text-lg"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              StockPro
+            </h2>
+            <p class="text-xs text-gray-500">Sistema de Gestão</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Menu -->
+      <nav class="flex-1 p-4 overflow-y-auto">
+        <ul class="space-y-2">
+          <li>
+            <a id="btn-dashboard" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 cursor-pointer transition-all duration-300 group">
+              <i class="fas fa-chart-line text-purple-400 group-hover:scale-110 transition-transform"></i>
+              <span class="font-medium">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a id="btn-entradas" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 cursor-pointer transition-all duration-300 group">
+              <i class="fas fa-arrow-down text-green-400 group-hover:scale-110 transition-transform"></i>
+              <span class="font-medium">Entradas</span>
+            </a>
+          </li>
+          <li>
+            <a id="btn-saidas" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 cursor-pointer transition-all duration-300 group">
+              <i class="fas fa-arrow-up text-red-400 group-hover:scale-110 transition-transform"></i>
+              <span class="font-medium">Saídas</span>
+            </a>
+          </li>
+          <li>
+            <a id="btn-notas" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 cursor-pointer transition-all duration-300 group">
+              <i class="fas fa-file-invoice text-blue-400 group-hover:scale-110 transition-transform"></i>
+              <span class="font-medium">Notas</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Footer Sidebar -->
+      <div class="p-4 border-t border-white/5">
+        <div class="flex items-center gap-3 p-3 bg-white/5 rounded-xl">
+          <a href="configuração.html" class="flex items-center gap-3 w-full">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+              <i class="fas fa-user text-white text-sm"></i>
+            </div>
+            <div class="flex-1">
+              <p class="text-sm font-semibold">Usuário</p>
+              <p class="text-xs text-gray-500">Administrador</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- DASHBOARD SECTION -->
+    <section id="dashboard" class="flex-1 ms-72 p-8 section active overflow-y-auto">
+      <!-- Header -->
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h1 class="text-4xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent mb-2">
+            Dashboard
+          </h1>
+          <p class="text-gray-400">Visão geral do seu estoque</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button id="btnNovoProduto" class="px-6 py-3 gradient-bg text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105">
+            <i class="fas fa-plus mr-2"></i>Cadastrar Produto
+          </button>
+          <button id="btnCadastrarCategoria" class="px-6 py-3 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-xl border border-white/10 transition-all duration-300 hover:scale-105">
+            <i class="fas fa-tag mr-2"></i>Cadastrar Categoria
+          </button>
+          <button type="button" class="relative p-3 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all duration-300 hover:scale-105 group">
+            <i class="fas fa-bell text-xl text-gray-300 group-hover:text-white transition-colors"></i>
+            <div class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center border-2 border-[#0d0d0d]">
+              <span class="text-xs font-bold text-white">3</span>
+            </div>
+            <div class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full animate-ping opacity-75"></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Cards de Resumo -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- Card 1 -->
+        <div class="gradient-border p-6 rounded-xl card-hover">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center">
+              <i class="fas fa-exclamation-triangle text-white text-xl"></i>
+            </div>
+            <div class="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-xs font-semibold">
+              Alerta
+            </div>
+          </div>
+          <h3 class="text-gray-400 text-sm font-medium mb-2">Produtos com Baixo Estoque</h3>
+          <p class="text-4xl font-bold text-white mb-1">
+            <span id="card-baixo-estoque">0</span>
+          </p>
+          <p class="text-xs text-gray-500">
+            <span id="card-baixo-estoque-descricao">Nenhum produto em alerta</span>
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="gradient-border p-6 rounded-xl card-hover">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+              <i class="fas fa-cube text-white text-xl"></i>
+            </div>
+            <div class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-xs font-semibold">
+              Total
+            </div>
+          </div>
+          <h3 class="text-gray-400 text-sm font-medium mb-2">Estoque Total</h3>
+          <p class="text-4xl font-bold text-white mb-1">
+            <span id="card-estoque-total">0</span>
+          </p>
+          <p class="text-xs text-gray-500">Produtos em estoque</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="gradient-border p-6 rounded-xl card-hover">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
+              <i class="fas fa-dollar-sign text-white text-xl"></i>
+            </div>
+            <div class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-semibold">
+              Mensal
+            </div>
+          </div>
+          <h3 class="text-gray-400 text-sm font-medium mb-2">Gastos do Mês</h3>
+          <p class="text-4xl font-bold text-white mb-1">
+            <span id="card-gastos-mes">R$ 0,00</span>
+          </p>
+          <p class="text-xs text-gray-500">Investimento mensal</p>
+        </div>
+      </div>
+
+      <!-- TABELA DE PRODUTOS -->
+      <div>
+        <tabela-produtos></tabela-produtos>
+      </div>
+    </section>
+
+    <!-- ENTRADA SECTION -->
+    <section id="entradas" class="flex-1 ms-72 p-8 section hidden overflow-y-auto">
+      <div class="mb-8">
+        <h1 class="text-4xl font-bold bg-gradient-to-r from-green-400 via-emerald-400 to-teal-400 bg-clip-text text-transparent mb-2">
+          Entradas
+        </h1>
+        <p class="text-gray-400">Histórico de entradas de produtos</p>
+      </div>
+
+      <div>
+        <tabela-entradas></tabela-entradas>
+      </div>
+      
+      <div class="flex items-center gap-2 p-4 bg-red-500/10 border border-red-500/20 rounded-xl">
+        <i class="fas fa-info-circle text-red-400"></i>
+        <p class="text-red-400 text-sm">
+          Após 40 dias todo histórico de entrada será apagado para iniciar o novo mês. Recomendamos que baixe o relatório após 30 dias.
+        </p>
+      </div>
+    </section>
+
+    <!-- SAIDA SECTION -->
+    <section id="saidas" class="flex-1 ms-72 p-8 section hidden overflow-y-auto">
+      <!-- Header da seção -->
+      <div class="flex justify-between items-center mb-8">
+        <div>
+          <h1 class="text-4xl font-bold bg-gradient-to-r from-red-400 via-pink-400 to-rose-400 bg-clip-text text-transparent mb-2">
+            Saídas
+          </h1>
+          <p class="text-gray-400">Histórico de saídas de produtos</p>
+        </div>
+
+        <button id="btnCadastrarSaida" onclick="openModal('modal_cadastrar_saida')" class="px-6 py-3 gradient-bg text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105">
+          <i class="fas fa-plus mr-2"></i>Cadastrar Saída
+        </button>
+      </div>
+
+      <div class="gradient-border p-6 rounded-xl mb-4">
+        <tabela-saidas></tabela-saidas>
+      </div>
+      
+      <div class="flex items-center gap-2 p-4 bg-red-500/10 border border-red-500/20 rounded-xl">
+        <i class="fas fa-info-circle text-red-400"></i>
+        <p class="text-red-400 text-sm">
+          Após 40 dias todo histórico de saída será apagado para iniciar o novo mês. Recomendamos que baixe o relatório após 30 dias.
+        </p>
+      </div>
+    </section>
+
+    <!-- NOTAS SECTION -->
+    <section id="notas" class="flex-1 ms-72 p-8 section hidden overflow-y-auto">
+      <!-- Header da seção -->
+      <div class="flex justify-between items-center mb-8">
+        <div>
+          <h1 class="text-4xl font-bold bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent mb-2">
+            Notas de Entrada
+          </h1>
+          <p class="text-gray-400">Gestão de notas fiscais e fornecedores</p>
+        </div>
+
+        <div class="flex gap-3">
+          <button id="btnCadastrarNota" onclick="openModal('modal_cadastrar_nota')" class="px-6 py-3 gradient-bg text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105">
+            <i class="fas fa-file-invoice mr-2"></i>Cadastrar Nota
+          </button>
+
+          <button id="btnCadastrarFornecedor" onclick="openModal('modal_cadastrar_fornecedor')" class="px-6 py-3 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-xl border border-white/10 transition-all duration-300 hover:scale-105">
+            <i class="fas fa-truck mr-2"></i>Cadastrar Fornecedor
+          </button>
+          
+          <button id="btnAddItems" onclick="openModal('modal_add_items')" class="px-6 py-3 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-xl border border-white/10 transition-all duration-300 hover:scale-105">
+            <i class="fas fa-plus-circle mr-2"></i>Adicionar Itens
+          </button>
+        </div>
+      </div>
+
+      <!-- Resumo Rápido -->
+      <div class="grid grid-cols-3 gap-6 mb-8">
+        <div class="gradient-border p-6 rounded-xl card-hover">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+              <i class="fas fa-receipt text-white"></i>
+            </div>
+            <p class="text-gray-400 text-sm font-medium">Total de Notas no Mês</p>
+          </div>
+          <h2 class="text-3xl font-bold text-white">
+            <span id="valor-total-notas">0</span>
+          </h2>
+        </div>
+
+        <div class="gradient-border p-6 rounded-xl card-hover">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
+              <i class="fas fa-money-bill-wave text-white"></i>
+            </div>
+            <p class="text-gray-400 text-sm font-medium">Valor Total do Mês</p>
+          </div>
+          <h2 class="text-3xl font-bold text-white">
+            <span id="valor-valor-total">R$ 0,00</span>
+          </h2>
+        </div>
+
+        <div class="gradient-border p-6 rounded-xl card-hover">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+              <i class="fas fa-box text-white"></i>
+            </div>
+            <p class="text-gray-400 text-sm font-medium">Produtos Inseridos</p>
+          </div>
+          <h2 class="text-3xl font-bold text-white">
+            <span id="valor-produtos-inseridos">0</span>
+          </h2>
+        </div>
+      </div>
+
+      <!-- Tabela de Notas -->
+      <div class="gradient-border p-6 rounded-xl">
+        <tabela-notas></tabela-notas>
+      </div>
+    </section>
+
+    <!-- Modais -->
+    <modal-categoria></modal-categoria>
+    <modal-produto></modal-produto>
+    <modal-notas></modal-notas>
+    <modal-fornecedor></modal-fornecedor>
+    <modal-items-notas></modal-items-notas>
+    <modal-saidas></modal-saidas>
+    <modal-editar-produto></modal-editar-produto>
+
+
+    <!-- COMPONENTES -->
+    <script type="module" src="components/modals/modal-fornecedor.js"></script>
+    <script type="module" src="components/modals/modal-categoria.js"></script>
+    <script type="module" src="components/modals/modal-produto.js"></script>
+    <script type="module" src="components/modals/modal-items-notas.js"></script>
+    <script type="module" src="components/modals/modal-notas.js"></script>
+    <script type="module" src="components/modals/modal-saidas.js"></script>
+    <script type="module" src="components/modals/modal-editar-produto.js"></script>
+
+    <script src="components/tabelas/tabela-produtos.js"></script>
+    <script src="components/tabelas/tabela-entradas.js"></script>
+    <script src="components/tabelas/tabela-saidas.js"></script>
+    <script src="components/tabelas/tabela-notas.js"></script>
+
+    <!-- SERVIÇOS E MÓDULOS -->
+    <script type="module" src="js/services/api.js"></script>
+    <script type="module" src="js/modules/categorias.js"></script>
+    <script type="module" src="js/modules/fornecedores.js"></script>
+    <script type="module" src="js/modules/notas.js"></script>
+    <script type="module" src="js/modules/produtos.js"></script>
+    <script type="module" src="js/modules/itensNota.js"></script>
+
+    <!-- SCRIPT GLOBAL -->
+    <script type="module" src="js/core/ui.js"></script>
+    <script type="module" src="js/index.js"></script>
+
+    <!-- SCRIPT TAILWINDCSS -->
+    <script src="tailwindConfig.js"></script>
+
+    <script>
+      // Testar conexão com preload
+console.log(window.api.ping()); // deve mostrar "pong"
+
+// Futuro exemplo de comunicação backend
+// window.api.fetchData("produtos").then(data => console.log(data));
+
+    </script>
+  </body>
+</html>
