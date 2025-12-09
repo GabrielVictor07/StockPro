@@ -1,5 +1,8 @@
 import express from "express";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 import produtosRoutes from "./routes/produtos.routes.js";
 import categoriasRoutes from "./routes/categorias.routes.js";
@@ -10,6 +13,14 @@ import saidasRoutes from "./routes/saidas.routes.js";
 import entradasRoutes from "./entradas.js";
 
 const app = express();
+
+// Servir frontend estático (index.html, assets)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const frontendPath = path.resolve(__dirname, '../../frontend');
+if (fs.existsSync(frontendPath)) {
+  app.use(express.static(frontendPath));
+}
 
 // LIBERA O FRONT PRA ACESSAR
 app.use(cors({
@@ -44,6 +55,10 @@ app.get("/dashboard", (req, res) => {
 
     res.send(html);
   });
+});
+
+app.get("/", (req, res) => {
+  res.send("API do sistema de estoque está funcionando.");
 });
 
 export default app;
